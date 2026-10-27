@@ -75,6 +75,7 @@ jobs:
           print("四表齐全，资金表日期覆盖", lo, "至", hi)
           PY
 
+      
       - name: 基础导入与文档入口检查
         run: |
           python -c "import dataagent; print('dataagent', dataagent.__version__)"
@@ -82,7 +83,16 @@ jobs:
           python scripts/demo_agent.py --help > /dev/null
           python scripts/evaluate_agent.py --help > /dev/null
           python scripts/verify_golden.py --help > /dev/null
-          python -c "
+          python - <<'PY'
+          import tomllib
+          import pathlib
+          import dataagent
+
+          metadata = tomllib.loads(pathlib.Path("pyproject.toml").read_text())
+          assert metadata["project"]["version"] == dataagent.__version__
+          print("version consistent:", metadata["project"]["version"])
+          PY
+
 import tomllib, pathlib
 d = tomllib.loads(pathlib.Path('pyproject.toml').read_text())
 assert d['project']['version'] == __import__('dataagent').__version__
