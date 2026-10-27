@@ -139,12 +139,32 @@ flowchart LR
 > （由 `demo_data/*.parquet` 离线构建）。两者均非真实业务运行数据。详见 [`docs/data_sources.md`](docs/data_sources.md)。
 
 ---
+## 6. 配置自己的 DeepSeek API Key（其他兼容openai的apikey也可以，将对应的url与model更换即可）（此处可以不配置，或在启动streamlit之前配置即可，如果不配置的情况下启动agent仅能使用mock模块）
 
-## 6. Quick Start
+> Key **只从进程环境变量读取**，项目不读取 `.env`，也**永不保存**你的 Key。
+
+```powershell
+# 安全输入：Key 不进入命令历史、不回显（兼容 PowerShell 5.1 与 7）
+$secure = Read-Host -AsSecureString "请输入 API Key"
+$env:DATAAGENT_LLM_API_KEY = [System.Net.NetworkCredential]::new("", $secure).Password
+$env:DATAAGENT_LLM_BASE_URL = "https://api.deepseek.com"
+$env:DATAAGENT_LLM_MODEL = "deepseek-flash"
+
+# 自查（只显示是否已设置，不打印值）
+if ($env:DATAAGENT_LLM_API_KEY) { "KEY: 已设置" } else { "KEY: 未设置" }
+```
+
+然后重启 Streamlit，在侧边栏选择 **模型模式 = Real**、**数据模式 = 项目自带演示数据库**。
+
+**费用提示**：真实模式按服务商计费；正常每个问题 1 次解析调用，**若模型输出不合规会追加一次
+Schema 修复重试**（可能额外计费）；叙述层默认关闭。
+
+---
+## 7. Quick Start
 
 > 目标：克隆后**无需自备数据**，装好依赖即可在本地分析项目附带的数据。
 
-### 6.1 克隆与准备环境
+### 7.1 克隆与准备环境
 
 ```powershell
 # 1) 克隆
@@ -170,7 +190,7 @@ python -m pip install --upgrade pip
 python -m pip install -e ".[dev,web]"   # 只做命令行/测试可改用 ".[dev]"
 ```
 
-### 6.2 构建演示数据库（离线，使用仓库自带数据）
+### 7.2 构建演示数据库（离线，使用仓库自带数据）
 
 ```powershell
 python scripts\build_demo_db.py --verify
@@ -187,7 +207,7 @@ python scripts\build_demo_db.py --verify
   数据覆盖：2013-07-01 ~ 2014-08-31
 ```
 
-### 6.3 启动界面
+### 7.3 启动界面
 
 ```powershell
 python -m streamlit run app.py
@@ -196,7 +216,7 @@ python -m streamlit run app.py
 浏览器打开 <http://localhost:8501>。**无需 API Key**：默认 Mock 模式可直接运行内置演示；
 配置自己的 Key 后（见下一节）即可用 **Real + 项目自带演示数据库**自由提问。
 
-### 6.4 命令行同样可用
+### 7.4 命令行同样可用
 
 ```powershell
 # 无 Key 的演示（8 个内置场景）
@@ -213,7 +233,7 @@ python scripts\demo_agent.py --real --project-db --question "分析 2014 年 8 �
 > 验证单个问题请始终带 `--question`。
 
 
-### 6.5 Mock 内置演示场景（无 Key 体验）
+### 7.5 Mock 内置演示场景（无 Key 体验）
 
 Mock 模式使用**事先准备好的分析计划**（不能自由理解任意问题）。共 8 个场景：
 
@@ -232,27 +252,7 @@ Mock 模式使用**事先准备好的分析计划**（不能自由理解任意�
 
 ---
 
-## 7. 配置自己的 DeepSeek API Key
 
-> Key **只从进程环境变量读取**，项目不读取 `.env`，也**永不保存**你的 Key。
-
-```powershell
-# 安全输入：Key 不进入命令历史、不回显（兼容 PowerShell 5.1 与 7）
-$secure = Read-Host -AsSecureString "请输入 API Key"
-$env:DATAAGENT_LLM_API_KEY = [System.Net.NetworkCredential]::new("", $secure).Password
-$env:DATAAGENT_LLM_BASE_URL = "https://api.deepseek.com"
-$env:DATAAGENT_LLM_MODEL = "deepseek-flash"
-
-# 自查（只显示是否已设置，不打印值）
-if ($env:DATAAGENT_LLM_API_KEY) { "KEY: 已设置" } else { "KEY: 未设置" }
-```
-
-然后重启 Streamlit，在侧边栏选择 **模型模式 = Real**、**数据模式 = 项目自带演示数据库**。
-
-**费用提示**：真实模式按服务商计费；正常每个问题 1 次解析调用，**若模型输出不合规会追加一次
-Schema 修复重试**（可能额外计费）；叙述层默认关闭。
-
----
 
 ## 8. 数据分析示例（均已在自带数据上实测）
 
