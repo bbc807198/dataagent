@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dataagent"
+version = "0.7.1"
+description = "AI 数据分析 Agent：自然语言 → 安全 SQL → Python 统计 → 图表 → 证据化中文报告"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+]
+# 与根目录 LICENSE（MIT License）一致；版权归 dataagent project contributors 所有。
+authors = [{ name = "dataagent 项目组" }]
+keywords = ["data-analysis", "duckdb", "data-quality", "agent"]
+
+# 运行时依赖（明确版本范围）
+dependencies = [
+    "duckdb>=1.1,<2.0",
+    "sqlglot>=25.0,<28.0",
+    "pydantic>=2.6,<3.0",
+    "openai>=1.40,<2.0",
+    "matplotlib>=3.8,<4.0",
+]
+
+# 开发/测试依赖（pandas 仅用于测试中的 LOCF 交叉验证，不进入运行时）
+[project.optional-dependencies]
+# 本地 Web 界面（阶段 12）：pip install -e ".[web]"
+web = [
+    "streamlit>=1.36,<2.0",
+]
+dev = [
+    "pytest>=8.0,<9.0",
+    "pandas>=2.2,<4.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["dataagent*"]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --strict-markers"
+markers = [
+    "integration: 需要本地真实原始数据的集成测试（无数据时自动跳过）",
+]

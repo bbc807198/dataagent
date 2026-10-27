@@ -1,0 +1,751 @@
+{
+  "metadata": {
+    "title": "数据分析报告：帮我分析申购和赎回金额最近的趋势。",
+    "generated_at": "2026-10-25T20:44:38+08:00",
+    "run_status": "report_generated",
+    "model_mode": "mock",
+    "data_mode": "synthetic",
+    "narrative_source": "deterministic",
+    "llm_model": null,
+    "narrative_fallback_reason": null,
+    "narrative_fallback_detail": null
+  },
+  "question": "帮我分析申购和赎回金额最近的趋势。",
+  "plan": {
+    "question": "帮我分析申购和赎回金额最近的趋势。",
+    "intent": "按日同时展示申购与赎回金额趋势",
+    "analysis_type": "time_trend",
+    "metrics": [
+      {
+        "metric_id": "purchase_amount",
+        "term": null
+      },
+      {
+        "metric_id": "redeem_amount",
+        "term": null
+      }
+    ],
+    "time_range": {
+      "type": "explicit_dates",
+      "relative_period": null,
+      "anchor": "max_available_data_date",
+      "n": null,
+      "resolved_start_date": "2024-01-02",
+      "resolved_end_date": "2024-01-12",
+      "comparison_start_date": null,
+      "comparison_end_date": null,
+      "resolution_status": "resolved",
+      "unresolved": []
+    },
+    "group_by": [],
+    "filters": [],
+    "statistics": [
+      "SUM"
+    ],
+    "outputs": {
+      "summary_table": true,
+      "trend_chart": true,
+      "ranking_chart": false,
+      "comparison_chart": false,
+      "chinese_report": true,
+      "cause_analysis": false
+    },
+    "top_n": 10,
+    "clarification_needed": false,
+    "clarification_questions": [],
+    "unresolved": [],
+    "notes": []
+  },
+  "execution_summary": {
+    "status": "ok",
+    "total_ms": 14.32,
+    "queries": [
+      {
+        "name": "time_trend_report_date",
+        "status": "ok",
+        "columns": [
+          "report_date",
+          "purchase_amount_sum",
+          "redeem_amount_sum"
+        ],
+        "row_count": 11,
+        "truncated": false,
+        "window_label": null,
+        "window_start": "2024-01-02",
+        "window_end": "2024-01-12",
+        "execution_ms": 1.62,
+        "error": null
+      }
+    ],
+    "error": null
+  },
+  "time_range": {
+    "requested": {
+      "type": "explicit_dates",
+      "relative_period": null,
+      "start": "2024-01-02",
+      "end": "2024-01-12",
+      "comparison_start": null,
+      "comparison_end": null,
+      "anchor": "max_available_data_date"
+    },
+    "effective": {
+      "start": "2024-01-02",
+      "end": "2024-01-12"
+    },
+    "effective_comparison": null,
+    "effective_note": null,
+    "data_coverage": {
+      "min": "2013-07-01",
+      "max": "2014-08-31",
+      "note": "数据集实际覆盖范围（请求超出时被截取或拒绝）"
+    }
+  },
+  "metrics": [
+    {
+      "metric_id": "purchase_amount",
+      "name_zh": "申购金额",
+      "unit": "元",
+      "formula": "总申购 = 直接购买 + 收益再投（资金流口径，不是商品销售额）"
+    },
+    {
+      "metric_id": "redeem_amount",
+      "name_zh": "赎回金额",
+      "unit": "元",
+      "formula": "总赎回 = 消费 + 转出（资金流口径）"
+    }
+  ],
+  "method": "daily_trend",
+  "method_params": {
+    "metrics": [
+      "purchase_amount",
+      "redeem_amount"
+    ],
+    "dims": []
+  },
+  "statistics": {
+    "kind": "trend_set",
+    "series": [
+      {
+        "kind": "trend",
+        "metric_id": "purchase_amount",
+        "metric_name_zh": "申购金额",
+        "term": null,
+        "unit": "元",
+        "points": [
+          {
+            "date": "2024-01-02",
+            "value": 500.0
+          },
+          {
+            "date": "2024-01-03",
+            "value": 300.0
+          },
+          {
+            "date": "2024-01-04",
+            "value": 200.0
+          },
+          {
+            "date": "2024-01-05",
+            "value": 0.0
+          },
+          {
+            "date": "2024-01-06",
+            "value": 100.0
+          },
+          {
+            "date": "2024-01-07",
+            "value": 0.0
+          },
+          {
+            "date": "2024-01-08",
+            "value": 0.0
+          },
+          {
+            "date": "2024-01-09",
+            "value": 1000.0
+          },
+          {
+            "date": "2024-01-10",
+            "value": 0.0
+          },
+          {
+            "date": "2024-01-11",
+            "value": 500.0
+          },
+          {
+            "date": "2024-01-12",
+            "value": 250.0
+          }
+        ],
+        "daily_changes": [
+          {
+            "date": "2024-01-03",
+            "previous_value": 500.0,
+            "current_value": 300.0,
+            "abs_diff": -200.0,
+            "change_rate": -0.4,
+            "rate_note": null
+          },
+          {
+            "date": "2024-01-04",
+            "previous_value": 300.0,
+            "current_value": 200.0,
+            "abs_diff": -100.0,
+            "change_rate": -0.3333333333333333,
+            "rate_note": null
+          },
+          {
+            "date": "2024-01-05",
+            "previous_value": 200.0,
+            "current_value": 0.0,
+            "abs_diff": -200.0,
+            "change_rate": -1.0,
+            "rate_note": null
+          },
+          {
+            "date": "2024-01-06",
+            "previous_value": 0.0,
+            "current_value": 100.0,
+            "abs_diff": 100.0,
+            "change_rate": null,
+            "rate_note": "上一期值为 0，变化率不可计算（不返回无穷大或伪造百分比）"
+          },
+          {
+            "date": "2024-01-07",
+            "previous_value": 100.0,
+            "current_value": 0.0,
+            "abs_diff": -100.0,
+            "change_rate": -1.0,
+            "rate_note": null
+          },
+          {
+            "date": "2024-01-08",
+            "previous_value": 0.0,
+            "current_value": 0.0,
+            "abs_diff": 0.0,
+            "change_rate": null,
+            "rate_note": "上一期值为 0，变化率不可计算（不返回无穷大或伪造百分比）"
+          },
+          {
+            "date": "2024-01-09",
+            "previous_value": 0.0,
+            "current_value": 1000.0,
+            "abs_diff": 1000.0,
+            "change_rate": null,
+            "rate_note": "上一期值为 0，变化率不可计算（不返回无穷大或伪造百分比）"
+          },
+          {
+            "date": "2024-01-10",
+            "previous_value": 1000.0,
+            "current_value": 0.0,
+            "abs_diff": -1000.0,
+            "change_rate": -1.0,
+            "rate_note": null
+          },
+          {
+            "date": "2024-01-11",
+            "previous_value": 0.0,
+            "current_value": 500.0,
+            "abs_diff": 500.0,
+            "change_rate": null,
+            "rate_note": "上一期值为 0，变化率不可计算（不返回无穷大或伪造百分比）"
+          },
+          {
+            "date": "2024-01-12",
+            "previous_value": 500.0,
+            "current_value": 250.0,
+            "abs_diff": -250.0,
+            "change_rate": -0.5,
+            "rate_note": null
+          }
+        ],
+        "additive": true,
+        "total": 2850.0,
+        "total_note": null,
+        "period_mean": null,
+        "cumulative_last": 250.0,
+        "missing_dates": [],
+        "duplicate_dates": [],
+        "group": {}
+      },
+      {
+        "kind": "trend",
+        "metric_id": "redeem_amount",
+        "metric_name_zh": "赎回金额",
+        "term": null,
+        "unit": "元",
+        "points": [
+          {
+            "date": "2024-01-02",
+            "value": 0.0
+          },
+          {
+            "date": "2024-01-03",
+            "value": 200.0
+          },
+          {
+            "date": "2024-01-04",
+            "value": 350.0
+          },
+          {
+            "date": "2024-01-05",
+            "value": 0.0
+          },
+          {
+            "date": "2024-01-06",
+            "value": 0.0
+          },
+          {
+            "date": "2024-01-07",
+            "value": 0.0
+          },
+          {
+            "date": "2024-01-08",
+            "value": 0.0
+          },
+          {
+            "date": "2024-01-09",
+            "value": 800.0
+          },
+          {
+            "date": "2024-01-10",
+            "value": 0.0
+          },
+          {
+            "date": "2024-01-11",
+            "value": 500.0
+          },
+          {
+            "date": "2024-01-12",
+            "value": 0.0
+          }
+        ],
+        "daily_changes": [
+          {
+            "date": "2024-01-03",
+            "previous_value": 0.0,
+            "current_value": 200.0,
+            "abs_diff": 200.0,
+            "change_rate": null,
+            "rate_note": "上一期值为 0，变化率不可计算（不返回无穷大或伪造百分比）"
+          },
+          {
+            "date": "2024-01-04",
+            "previous_value": 200.0,
+            "current_value": 350.0,
+            "abs_diff": 150.0,
+            "change_rate": 0.75,
+            "rate_note": null
+          },
+          {
+            "date": "2024-01-05",
+            "previous_value": 350.0,
+            "current_value": 0.0,
+            "abs_diff": -350.0,
+            "change_rate": -1.0,
+            "rate_note": null
+          },
+          {
+            "date": "2024-01-06",
+            "previous_value": 0.0,
+            "current_value": 0.0,
+            "abs_diff": 0.0,
+            "change_rate": null,
+            "rate_note": "上一期值为 0，变化率不可计算（不返回无穷大或伪造百分比）"
+          },
+          {
+            "date": "2024-01-07",
+            "previous_value": 0.0,
+            "current_value": 0.0,
+            "abs_diff": 0.0,
+            "change_rate": null,
+            "rate_note": "上一期值为 0，变化率不可计算（不返回无穷大或伪造百分比）"
+          },
+          {
+            "date": "2024-01-08",
+            "previous_value": 0.0,
+            "current_value": 0.0,
+            "abs_diff": 0.0,
+            "change_rate": null,
+            "rate_note": "上一期值为 0，变化率不可计算（不返回无穷大或伪造百分比）"
+          },
+          {
+            "date": "2024-01-09",
+            "previous_value": 0.0,
+            "current_value": 800.0,
+            "abs_diff": 800.0,
+            "change_rate": null,
+            "rate_note": "上一期值为 0，变化率不可计算（不返回无穷大或伪造百分比）"
+          },
+          {
+            "date": "2024-01-10",
+            "previous_value": 800.0,
+            "current_value": 0.0,
+            "abs_diff": -800.0,
+            "change_rate": -1.0,
+            "rate_note": null
+          },
+          {
+            "date": "2024-01-11",
+            "previous_value": 0.0,
+            "current_value": 500.0,
+            "abs_diff": 500.0,
+            "change_rate": null,
+            "rate_note": "上一期值为 0，变化率不可计算（不返回无穷大或伪造百分比）"
+          },
+          {
+            "date": "2024-01-12",
+            "previous_value": 500.0,
+            "current_value": 0.0,
+            "abs_diff": -500.0,
+            "change_rate": -1.0,
+            "rate_note": null
+          }
+        ],
+        "additive": true,
+        "total": 1850.0,
+        "total_note": null,
+        "period_mean": null,
+        "cumulative_last": 0.0,
+        "missing_dates": [],
+        "duplicate_dates": [],
+        "group": {}
+      }
+    ],
+    "group_by": [],
+    "metric_ids": [
+      "purchase_amount",
+      "redeem_amount"
+    ]
+  },
+  "evidence": [
+    {
+      "id": "E001",
+      "text": "全部：申购金额在 2024-01-02~2024-01-12 共 11 个数据点，由 500.00元 变化到 250.00元，区间合计 2,850.00元",
+      "metric_id": "purchase_amount",
+      "metric_name_zh": "申购金额",
+      "unit": "元",
+      "query_name": "time_trend_report_date",
+      "date_range": [
+        "2024-01-02",
+        "2024-01-12"
+      ],
+      "main_window": null,
+      "comparison_window": null,
+      "requested_range": [
+        "2024-01-02",
+        "2024-01-12"
+      ],
+      "requested_main_window": null,
+      "requested_comparison_window": null,
+      "data_points": 11,
+      "formula": "日环比 Δ=x_t−x_{t−1}；变化率=(x_t−x_{t−1})/x_{t−1}",
+      "evidence_strength": "direct_computation",
+      "input_summary": "11 个日值；首值 2024-01-02=500.0；末值 2024-01-12=250.0",
+      "warnings": [],
+      "limitations": [
+        "相关性/趋势为统计描述，不代表因果关系"
+      ]
+    },
+    {
+      "id": "E002",
+      "text": "全部：2024-01-05 的申购金额日环比降幅最大（变化率 -100.00%；前值 200.00元 → 本期 0.00元）",
+      "metric_id": "purchase_amount",
+      "metric_name_zh": "申购金额",
+      "unit": "元",
+      "query_name": "time_trend_report_date",
+      "date_range": [
+        "2024-01-02",
+        "2024-01-12"
+      ],
+      "main_window": null,
+      "comparison_window": null,
+      "requested_range": [
+        "2024-01-02",
+        "2024-01-12"
+      ],
+      "requested_main_window": null,
+      "requested_comparison_window": null,
+      "data_points": 10,
+      "formula": "变化率=(x_t−x_{t−1})/x_{t−1}（分母为 0 时不可计算）",
+      "evidence_strength": "direct_computation",
+      "input_summary": "11 个日值；首值 2024-01-02=500.0；末值 2024-01-12=250.0",
+      "warnings": [],
+      "limitations": [
+        "相关性/趋势为统计描述，不代表因果关系"
+      ]
+    },
+    {
+      "id": "E003",
+      "text": "全部：2024-01-05 的申购金额日环比绝对波动最大（变化率 -100.00%，绝对幅度 100.00%）",
+      "metric_id": "purchase_amount",
+      "metric_name_zh": "申购金额",
+      "unit": "元",
+      "query_name": "time_trend_report_date",
+      "date_range": [
+        "2024-01-02",
+        "2024-01-12"
+      ],
+      "main_window": null,
+      "comparison_window": null,
+      "requested_range": [
+        "2024-01-02",
+        "2024-01-12"
+      ],
+      "requested_main_window": null,
+      "requested_comparison_window": null,
+      "data_points": 10,
+      "formula": "变化率=(x_t−x_{t−1})/x_{t−1}（分母为 0 时不可计算）",
+      "evidence_strength": "direct_computation",
+      "input_summary": "11 个日值；首值 2024-01-02=500.0；末值 2024-01-12=250.0",
+      "warnings": [],
+      "limitations": [
+        "相关性/趋势为统计描述，不代表因果关系"
+      ]
+    },
+    {
+      "id": "E004",
+      "text": "全部：申购金额共 4 个日期的变化率不可计算（上一期值为 0）",
+      "metric_id": "purchase_amount",
+      "metric_name_zh": "申购金额",
+      "unit": "元",
+      "query_name": "time_trend_report_date",
+      "date_range": [
+        "2024-01-02",
+        "2024-01-12"
+      ],
+      "main_window": null,
+      "comparison_window": null,
+      "requested_range": [
+        "2024-01-02",
+        "2024-01-12"
+      ],
+      "requested_main_window": null,
+      "requested_comparison_window": null,
+      "data_points": 4,
+      "formula": "变化率=(x_t−x_{t−1})/x_{t−1}；分母为 0 时不可计算",
+      "evidence_strength": "observation",
+      "input_summary": "11 个日值；首值 2024-01-02=500.0；末值 2024-01-12=250.0",
+      "warnings": [
+        "上一期值为 0，变化率不可计算（不返回无穷大或伪造百分比）"
+      ],
+      "limitations": [
+        "变化率不可计算不影响其余统计"
+      ]
+    },
+    {
+      "id": "E005",
+      "text": "全部：赎回金额在 2024-01-02~2024-01-12 共 11 个数据点，由 0.00元 变化到 0.00元，区间合计 1,850.00元",
+      "metric_id": "redeem_amount",
+      "metric_name_zh": "赎回金额",
+      "unit": "元",
+      "query_name": "time_trend_report_date",
+      "date_range": [
+        "2024-01-02",
+        "2024-01-12"
+      ],
+      "main_window": null,
+      "comparison_window": null,
+      "requested_range": [
+        "2024-01-02",
+        "2024-01-12"
+      ],
+      "requested_main_window": null,
+      "requested_comparison_window": null,
+      "data_points": 11,
+      "formula": "日环比 Δ=x_t−x_{t−1}；变化率=(x_t−x_{t−1})/x_{t−1}",
+      "evidence_strength": "direct_computation",
+      "input_summary": "11 个日值；首值 2024-01-02=0.0；末值 2024-01-12=0.0",
+      "warnings": [],
+      "limitations": [
+        "相关性/趋势为统计描述，不代表因果关系"
+      ]
+    },
+    {
+      "id": "E006",
+      "text": "全部：2024-01-05 的赎回金额日环比降幅最大（变化率 -100.00%；前值 350.00元 → 本期 0.00元）",
+      "metric_id": "redeem_amount",
+      "metric_name_zh": "赎回金额",
+      "unit": "元",
+      "query_name": "time_trend_report_date",
+      "date_range": [
+        "2024-01-02",
+        "2024-01-12"
+      ],
+      "main_window": null,
+      "comparison_window": null,
+      "requested_range": [
+        "2024-01-02",
+        "2024-01-12"
+      ],
+      "requested_main_window": null,
+      "requested_comparison_window": null,
+      "data_points": 10,
+      "formula": "变化率=(x_t−x_{t−1})/x_{t−1}（分母为 0 时不可计算）",
+      "evidence_strength": "direct_computation",
+      "input_summary": "11 个日值；首值 2024-01-02=0.0；末值 2024-01-12=0.0",
+      "warnings": [],
+      "limitations": [
+        "相关性/趋势为统计描述，不代表因果关系"
+      ]
+    },
+    {
+      "id": "E007",
+      "text": "全部：2024-01-04 的赎回金额日环比涨幅最大（变化率 +75.00%；前值 200.00元 → 本期 350.00元）",
+      "metric_id": "redeem_amount",
+      "metric_name_zh": "赎回金额",
+      "unit": "元",
+      "query_name": "time_trend_report_date",
+      "date_range": [
+        "2024-01-02",
+        "2024-01-12"
+      ],
+      "main_window": null,
+      "comparison_window": null,
+      "requested_range": [
+        "2024-01-02",
+        "2024-01-12"
+      ],
+      "requested_main_window": null,
+      "requested_comparison_window": null,
+      "data_points": 10,
+      "formula": "变化率=(x_t−x_{t−1})/x_{t−1}（分母为 0 时不可计算）",
+      "evidence_strength": "direct_computation",
+      "input_summary": "11 个日值；首值 2024-01-02=0.0；末值 2024-01-12=0.0",
+      "warnings": [],
+      "limitations": [
+        "相关性/趋势为统计描述，不代表因果关系"
+      ]
+    },
+    {
+      "id": "E008",
+      "text": "全部：2024-01-05 的赎回金额日环比绝对波动最大（变化率 -100.00%，绝对幅度 100.00%）",
+      "metric_id": "redeem_amount",
+      "metric_name_zh": "赎回金额",
+      "unit": "元",
+      "query_name": "time_trend_report_date",
+      "date_range": [
+        "2024-01-02",
+        "2024-01-12"
+      ],
+      "main_window": null,
+      "comparison_window": null,
+      "requested_range": [
+        "2024-01-02",
+        "2024-01-12"
+      ],
+      "requested_main_window": null,
+      "requested_comparison_window": null,
+      "data_points": 10,
+      "formula": "变化率=(x_t−x_{t−1})/x_{t−1}（分母为 0 时不可计算）",
+      "evidence_strength": "direct_computation",
+      "input_summary": "11 个日值；首值 2024-01-02=0.0；末值 2024-01-12=0.0",
+      "warnings": [],
+      "limitations": [
+        "相关性/趋势为统计描述，不代表因果关系"
+      ]
+    },
+    {
+      "id": "E009",
+      "text": "全部：赎回金额共 6 个日期的变化率不可计算（上一期值为 0）",
+      "metric_id": "redeem_amount",
+      "metric_name_zh": "赎回金额",
+      "unit": "元",
+      "query_name": "time_trend_report_date",
+      "date_range": [
+        "2024-01-02",
+        "2024-01-12"
+      ],
+      "main_window": null,
+      "comparison_window": null,
+      "requested_range": [
+        "2024-01-02",
+        "2024-01-12"
+      ],
+      "requested_main_window": null,
+      "requested_comparison_window": null,
+      "data_points": 6,
+      "formula": "变化率=(x_t−x_{t−1})/x_{t−1}；分母为 0 时不可计算",
+      "evidence_strength": "observation",
+      "input_summary": "11 个日值；首值 2024-01-02=0.0；末值 2024-01-12=0.0",
+      "warnings": [
+        "上一期值为 0，变化率不可计算（不返回无穷大或伪造百分比）"
+      ],
+      "limitations": [
+        "变化率不可计算不影响其余统计"
+      ]
+    }
+  ],
+  "warnings": [],
+  "limitations": [
+    "相关性/趋势为统计描述，不代表因果关系"
+  ],
+  "charts": [
+    {
+      "path": "trend_multi_purchase_amount_redeem_amount.png",
+      "kind": "chart"
+    }
+  ],
+  "data_coverage": {
+    "min": "2013-07-01",
+    "max": "2014-08-31",
+    "note": "数据集实际覆盖范围（请求超出时被截取或拒绝）"
+  },
+  "evidence_numbers": [
+    -1000.0,
+    -800.0,
+    -500.0,
+    -350.0,
+    -250.0,
+    -200.0,
+    -100.0,
+    -31.0,
+    -12.0,
+    -11.0,
+    -10.0,
+    -9.0,
+    -8.0,
+    -7.0,
+    -6.0,
+    -5.0,
+    -4.0,
+    -3.0,
+    -2.0,
+    -1.0,
+    -0.5,
+    -0.4,
+    -0.333333,
+    0.0,
+    0.75,
+    1.0,
+    1.62,
+    2.0,
+    3.0,
+    4.0,
+    5.0,
+    6.0,
+    7.0,
+    8.0,
+    9.0,
+    10.0,
+    11.0,
+    14.32,
+    75.0,
+    100.0,
+    150.0,
+    200.0,
+    250.0,
+    300.0,
+    350.0,
+    500.0,
+    800.0,
+    850.0,
+    1000.0,
+    1850.0,
+    2013.0,
+    2014.0,
+    2024.0,
+    2850.0
+  ]
+}

@@ -1,0 +1,71 @@
+# ============================================================
+# dataagent .gitignore
+# 原则：原始数据、本地数据库、密钥、虚拟环境、生成物一律不进 Git。
+# 注意：不要全局忽略 *.csv —— tests/fixtures/synthetic/ 下的合成样本需要可公开。
+# ============================================================
+
+# ---- 原始数据（原始授权业务数据，不随仓库发布）----
+/Purchase Redemption Data/
+*.zip
+*.7z
+*.tar
+*.tar.gz
+
+# ---- 本地生成的数据库（DuckDB/SQLite）----
+*.duckdb
+*.duckdb.wal
+*.db
+*.sqlite
+*.sqlite3
+/data/processed/
+
+# ---- 随仓库发布的授权脱敏演示数据（允许入库）----
+# demo_data/*.parquet 与 SHA256SUMS.txt 是**公开演示数据**，需要进 Git；
+# 但构建产物 demo_data/*.duckdb（若有人手动放到该目录）仍被上面的 *.duckdb 忽略。
+!/demo_data/
+!/demo_data/*.parquet
+!/demo_data/SHA256SUMS.txt
+!/demo_data/*.md
+
+# ---- Python 环境与缓存 ----
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# ---- 密钥与环境 ----
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ---- 日志、临时文件、生成的本地报告 ----
+*.log
+*.tmp
+temp/
+tmp/
+/outputs/
+/reports/
+# 本地产物：源码审查包与生成的图表/报告（不提交 Git）
+/artifacts/
+.DS_Store
+Thumbs.db
+
+# 内部开发历史（含原始平台引用），不随仓库公开发布
+/internal_dev_history/
+
+# pytest 临时目录（测试运行产物，不入库）
+.pytest_tmp/
+
+# 内部源码审查打包目录（不随公开仓库发布）
+/stage14_release/

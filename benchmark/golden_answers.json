@@ -1,0 +1,1752 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-10-26",
+  "dataset": {
+    "source": "tests/fixtures/synthetic/",
+    "kind": "synthetic",
+    "note": "人工构造的合成测试样本；不是真实业务数据",
+    "date_range": [
+      "2024-01-02",
+      "2024-01-12"
+    ]
+  },
+  "method": {
+    "independent_sql": "DuckDB read_csv_auto 直接聚合（不经 QueryBuilder / Analytics）",
+    "cross_check": "Python 算术独立复算（合计/均值/极值/窗口差）+ 生成期断言",
+    "tolerance": {
+      "amount_abs": 0.01,
+      "rate_abs": 1e-06,
+      "ratio_abs": 1e-06,
+      "note": "金额绝对容差 0.01 元；比率/收益率绝对容差 1e-6；日期、指标 ID、期限、状态为严格比较"
+    }
+  },
+  "answers": {
+    "T01": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "time_trend",
+      "expected_metrics": [
+        "purchase_amount"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "time_trend"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "purchase_amount"
+          ]
+        },
+        {
+          "kind": "point_count",
+          "value": 11
+        },
+        {
+          "kind": "series_sum",
+          "value": 2850,
+          "tol": 0.01
+        },
+        {
+          "kind": "first_value",
+          "value": 500,
+          "tol": 0.01
+        },
+        {
+          "kind": "last_value",
+          "value": 250,
+          "tol": 0.01
+        },
+        {
+          "kind": "max_drop",
+          "date": "2024-01-05",
+          "rate": -1.0,
+          "tol": 1e-06
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "T02": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "time_trend",
+      "expected_metrics": [
+        "redeem_amount"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "time_trend"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "redeem_amount"
+          ]
+        },
+        {
+          "kind": "point_count",
+          "value": 11
+        },
+        {
+          "kind": "series_sum",
+          "value": 1850,
+          "tol": 0.01
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "T03": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "time_trend",
+      "expected_metrics": [
+        "purchase_amount",
+        "redeem_amount"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "time_trend"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "purchase_amount",
+            "redeem_amount"
+          ]
+        },
+        {
+          "kind": "series_count",
+          "value": 2
+        },
+        {
+          "kind": "metric_sum",
+          "metric_id": "purchase_amount",
+          "value": 2850,
+          "tol": 0.01
+        },
+        {
+          "kind": "metric_sum",
+          "metric_id": "redeem_amount",
+          "value": 1850,
+          "tol": 0.01
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "T04": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "time_trend",
+      "expected_metrics": [
+        "daily_yield"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "time_trend"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "daily_yield"
+          ]
+        },
+        {
+          "kind": "point_count",
+          "value": 11
+        },
+        {
+          "kind": "period_mean",
+          "value": 1.4000000000000001,
+          "tol": 1e-06
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "T05": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "time_trend",
+      "expected_metrics": [
+        "seven_day_yield"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "time_trend"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "seven_day_yield"
+          ]
+        },
+        {
+          "kind": "point_count",
+          "value": 11
+        },
+        {
+          "kind": "period_mean",
+          "value": 5.0,
+          "tol": 1e-06
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "T06": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "time_trend",
+      "expected_metrics": [
+        "shibor_rate:O_N"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "time_trend"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "shibor_rate:O_N"
+          ]
+        },
+        {
+          "kind": "point_count",
+          "value": 4
+        },
+        {
+          "kind": "first_value",
+          "value": 3.8,
+          "tol": 1e-06
+        },
+        {
+          "kind": "last_value",
+          "value": 3.2,
+          "tol": 1e-06
+        },
+        {
+          "kind": "period_mean",
+          "value": 3.5,
+          "tol": 1e-06
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "T07": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "time_trend",
+      "expected_metrics": [
+        "shibor_rate:O_N",
+        "shibor_rate:1W"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "time_trend"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "shibor_rate:1W",
+            "shibor_rate:O_N"
+          ]
+        },
+        {
+          "kind": "series_count",
+          "value": 2
+        },
+        {
+          "kind": "term_period_mean",
+          "term": "O_N",
+          "value": 3.5,
+          "tol": 1e-06
+        },
+        {
+          "kind": "term_period_mean",
+          "term": "1W",
+          "value": 4.0,
+          "tol": 1e-06
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "T08": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "time_trend",
+      "expected_metrics": [
+        "purchase_amount"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "time_trend"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "purchase_amount"
+          ]
+        },
+        {
+          "kind": "series_count",
+          "value": 3
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "T09": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "time_trend",
+      "expected_metrics": [
+        "purchase_amount"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "time_trend"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "purchase_amount"
+          ]
+        },
+        {
+          "kind": "series_count",
+          "value": 2
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "T10": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "time_trend",
+      "expected_metrics": [
+        "active_user_count"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "time_trend"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "active_user_count"
+          ]
+        },
+        {
+          "kind": "period_mean",
+          "value": 1.0909090909090908,
+          "tol": 1e-06
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "T11": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "time_trend",
+      "expected_metrics": [
+        "net_inflow"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "time_trend"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "net_inflow"
+          ]
+        },
+        {
+          "kind": "point_count",
+          "value": 11
+        },
+        {
+          "kind": "series_sum",
+          "value": 1000,
+          "tol": 0.01
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "T12": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "time_trend",
+      "expected_metrics": [
+        "purchase_amount",
+        "net_inflow"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "time_trend"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "net_inflow",
+            "purchase_amount"
+          ]
+        },
+        {
+          "kind": "series_count",
+          "value": 2
+        },
+        {
+          "kind": "metric_sum",
+          "metric_id": "net_inflow",
+          "value": 1000,
+          "tol": 0.01
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "W01": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "window_comparison",
+      "expected_metrics": [
+        "net_inflow"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "window_comparison"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "net_inflow"
+          ]
+        },
+        {
+          "kind": "window_main_value",
+          "group": {
+            "city": "6081949"
+          },
+          "value": 0.0,
+          "tol": 0.01
+        },
+        {
+          "kind": "window_comparison_value",
+          "group": {
+            "city": "6081949"
+          },
+          "value": 550.0,
+          "tol": 0.01
+        },
+        {
+          "kind": "window_missing_in_comparison",
+          "group": {
+            "city": "6301949"
+          }
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "W02": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "window_comparison",
+      "expected_metrics": [
+        "purchase_amount"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "window_comparison"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "purchase_amount"
+          ]
+        },
+        {
+          "kind": "window_main_total",
+          "value": 1750.0,
+          "tol": 0.01
+        },
+        {
+          "kind": "window_comparison_total",
+          "value": 1100.0,
+          "tol": 0.01
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "W03": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "window_comparison",
+      "expected_metrics": [
+        "redeem_amount"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "window_comparison"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "redeem_amount"
+          ]
+        },
+        {
+          "kind": "window_missing_in_comparison",
+          "group": {
+            "sex": "0"
+          }
+        },
+        {
+          "kind": "window_comparison_value",
+          "group": {
+            "sex": "1"
+          },
+          "value": 550.0,
+          "tol": 0.01
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "W04": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "window_comparison",
+      "expected_metrics": [
+        "daily_yield"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "window_comparison"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "daily_yield"
+          ]
+        },
+        {
+          "kind": "window_main_value_nongrouped",
+          "value": 1.34,
+          "tol": 1e-06
+        },
+        {
+          "kind": "window_comparison_value_nongrouped",
+          "value": 1.45,
+          "tol": 1e-06
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "W05": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "window_comparison",
+      "expected_metrics": [
+        "net_inflow"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "window_comparison"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "net_inflow"
+          ]
+        },
+        {
+          "kind": "window_main_total",
+          "value": 450.0,
+          "tol": 0.01
+        },
+        {
+          "kind": "window_comparison_total",
+          "value": 550.0,
+          "tol": 0.01
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "R01": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "group_ranking",
+      "expected_metrics": [
+        "purchase_amount"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "group_ranking"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "purchase_amount"
+          ]
+        },
+        {
+          "kind": "ranking_top1_group",
+          "group": {
+            "city": "6281949"
+          }
+        },
+        {
+          "kind": "ranking_top1_value",
+          "value": 1500.0,
+          "tol": 0.01
+        },
+        {
+          "kind": "ranking_count",
+          "value": 3
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "R02": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "group_ranking",
+      "expected_metrics": [
+        "net_inflow"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "group_ranking"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "net_inflow"
+          ]
+        },
+        {
+          "kind": "ranking_top1_group",
+          "group": {
+            "city": "6081949"
+          }
+        },
+        {
+          "kind": "ranking_top1_value",
+          "value": 550.0,
+          "tol": 0.01
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "R03": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "group_ranking",
+      "expected_metrics": [
+        "redeem_amount"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "group_ranking"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "redeem_amount"
+          ]
+        },
+        {
+          "kind": "ranking_top1_group",
+          "group": {
+            "city": "6281949"
+          }
+        },
+        {
+          "kind": "ranking_top1_value",
+          "value": 1300.0,
+          "tol": 0.01
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "R04": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "group_ranking",
+      "expected_metrics": [
+        "purchase_amount"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "group_ranking"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "purchase_amount"
+          ]
+        },
+        {
+          "kind": "ranking_top1_group",
+          "group": {
+            "constellation": "金牛座"
+          }
+        },
+        {
+          "kind": "ranking_top1_value",
+          "value": 1500.0,
+          "tol": 0.01
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "R05": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "group_ranking",
+      "expected_metrics": [
+        "active_user_count"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "group_ranking"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "active_user_count"
+          ]
+        },
+        {
+          "kind": "ranking_count",
+          "value": 3
+        },
+        {
+          "kind": "ranking_top1_value",
+          "value": 1.0,
+          "tol": 1e-06
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "D01": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "distribution",
+      "expected_metrics": [
+        "purchase_amount"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "distribution"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "purchase_amount"
+          ]
+        },
+        {
+          "kind": "status_only"
+        },
+        {
+          "kind": "distribution_total",
+          "value": 2850.0,
+          "tol": 0.01
+        },
+        {
+          "kind": "distribution_sample_size",
+          "value": 1
+        },
+        {
+          "kind": "distribution_value_stat",
+          "stat": "mean",
+          "value": 2850.0,
+          "tol": 0.01
+        },
+        {
+          "kind": "distribution_value_stat",
+          "stat": "median",
+          "value": 2850.0,
+          "tol": 0.01
+        },
+        {
+          "kind": "distribution_value_stat",
+          "stat": "max",
+          "value": 2850.0,
+          "tol": 0.01
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "D02": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "distribution",
+      "expected_metrics": [
+        "net_inflow"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "distribution"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "net_inflow"
+          ]
+        },
+        {
+          "kind": "status_only"
+        },
+        {
+          "kind": "distribution_total",
+          "value": 1000.0,
+          "tol": 0.01
+        },
+        {
+          "kind": "distribution_sample_size",
+          "value": 1
+        },
+        {
+          "kind": "distribution_value_stat",
+          "stat": "min",
+          "value": 1000.0,
+          "tol": 0.01
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "D03": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "distribution",
+      "expected_metrics": [
+        "daily_yield"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "distribution"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "daily_yield"
+          ]
+        },
+        {
+          "kind": "status_only"
+        },
+        {
+          "kind": "distribution_total",
+          "value": 1.0,
+          "tol": 1e-06
+        },
+        {
+          "kind": "distribution_sample_size",
+          "value": 1
+        },
+        {
+          "kind": "distribution_value_stat",
+          "stat": "mean",
+          "value": 1.0,
+          "tol": 1e-06
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "D04": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "distribution",
+      "expected_metrics": [
+        "purchase_amount"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "distribution"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "purchase_amount"
+          ]
+        },
+        {
+          "kind": "status_only"
+        },
+        {
+          "kind": "distribution_total",
+          "value": 2850.0,
+          "tol": 0.01
+        },
+        {
+          "kind": "distribution_sample_size",
+          "value": 3
+        },
+        {
+          "kind": "distribution_value_stat",
+          "stat": "min",
+          "value": 250.0,
+          "tol": 0.01
+        },
+        {
+          "kind": "distribution_value_stat",
+          "stat": "max",
+          "value": 1500.0,
+          "tol": 0.01
+        },
+        {
+          "kind": "distribution_value_stat",
+          "stat": "median",
+          "value": 1100.0,
+          "tol": 0.01
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "A01": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "anomaly",
+      "expected_metrics": [
+        "purchase_amount"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "anomaly"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "purchase_amount"
+          ]
+        },
+        {
+          "kind": "status_only"
+        },
+        {
+          "kind": "anomaly_sample_size",
+          "value": 11
+        },
+        {
+          "kind": "anomaly_center",
+          "value": 200.0,
+          "tol": 0.01
+        },
+        {
+          "kind": "anomaly_mad",
+          "value": 200.0,
+          "tol": 0.01
+        },
+        {
+          "kind": "anomaly_count",
+          "value": 0
+        },
+        {
+          "kind": "anomaly_dates",
+          "dates": []
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "A02": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "anomaly",
+      "expected_metrics": [
+        "net_inflow"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "anomaly"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "net_inflow"
+          ]
+        },
+        {
+          "kind": "status_only"
+        },
+        {
+          "kind": "anomaly_sample_size",
+          "value": 11
+        },
+        {
+          "kind": "anomaly_center",
+          "value": 0.0,
+          "tol": 0.01
+        },
+        {
+          "kind": "anomaly_mad",
+          "value": 100.0,
+          "tol": 0.01
+        },
+        {
+          "kind": "anomaly_count",
+          "value": 1
+        },
+        {
+          "kind": "anomaly_dates",
+          "dates": [
+            "2024-01-02"
+          ]
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "A03": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "anomaly",
+      "expected_metrics": [
+        "daily_yield"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "anomaly"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "daily_yield"
+          ]
+        },
+        {
+          "kind": "status_only"
+        },
+        {
+          "kind": "anomaly_sample_size",
+          "value": 11
+        },
+        {
+          "kind": "anomaly_center",
+          "value": 1.4,
+          "tol": 1e-06
+        },
+        {
+          "kind": "anomaly_mad",
+          "value": 0.05999999999999983,
+          "tol": 1e-06
+        },
+        {
+          "kind": "anomaly_count",
+          "value": 0
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "C01": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "correlation",
+      "expected_metrics": [
+        "purchase_amount",
+        "redeem_amount"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "correlation"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "purchase_amount",
+            "redeem_amount"
+          ]
+        },
+        {
+          "kind": "status_only"
+        },
+        {
+          "kind": "correlation_pair",
+          "metrics": [
+            "purchase_amount",
+            "redeem_amount"
+          ]
+        },
+        {
+          "kind": "correlation_pairs_count",
+          "value": 11
+        },
+        {
+          "kind": "correlation_coefficient",
+          "value": 0.8287932670304248,
+          "method": "pearson",
+          "tol": 0.001
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "C02": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "correlation",
+      "expected_metrics": [
+        "redeem_amount",
+        "net_inflow"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "correlation"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "net_inflow",
+            "redeem_amount"
+          ]
+        },
+        {
+          "kind": "status_only"
+        },
+        {
+          "kind": "correlation_pair",
+          "metrics": [
+            "net_inflow",
+            "redeem_amount"
+          ]
+        },
+        {
+          "kind": "correlation_pairs_count",
+          "value": 11
+        },
+        {
+          "kind": "correlation_coefficient",
+          "value": -0.08568069801628324,
+          "method": "pearson",
+          "tol": 0.001
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "C03": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "correlation",
+      "expected_metrics": [
+        "net_inflow",
+        "active_user_count"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "correlation"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "active_user_count",
+            "net_inflow"
+          ]
+        },
+        {
+          "kind": "status_only"
+        },
+        {
+          "kind": "correlation_pair",
+          "metrics": [
+            "active_user_count",
+            "net_inflow"
+          ]
+        },
+        {
+          "kind": "correlation_pairs_count",
+          "value": 11
+        },
+        {
+          "kind": "correlation_coefficient",
+          "value": 0.3025798391224178,
+          "method": "pearson",
+          "tol": 0.001
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "S01": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "descriptive",
+      "expected_metrics": [
+        "purchase_amount"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "descriptive"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "purchase_amount"
+          ]
+        },
+        {
+          "kind": "descriptive_value",
+          "column_contains": "purchase",
+          "value": 2850,
+          "tol": 0.01
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "S02": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "descriptive",
+      "expected_metrics": [
+        "purchase_amount",
+        "redeem_amount"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "descriptive"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "purchase_amount",
+            "redeem_amount"
+          ]
+        },
+        {
+          "kind": "descriptive_value",
+          "column_contains": "redeem",
+          "value": 1850,
+          "tol": 0.01
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "S03": {
+      "expected_behavior": "success",
+      "expected_status": "ok",
+      "expected_analysis_type": "descriptive",
+      "expected_metrics": [
+        "active_user_count"
+      ],
+      "verifiable": true,
+      "checks": [
+        {
+          "kind": "analysis_type_is",
+          "value": "descriptive"
+        },
+        {
+          "kind": "metrics_exact",
+          "metrics": [
+            "active_user_count"
+          ]
+        },
+        {
+          "kind": "descriptive_value",
+          "column_contains": "user",
+          "value": 3.0,
+          "tol": 1e-06
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "numeric"
+    },
+    "N01": {
+      "expected_behavior": "reject",
+      "expected_status": "plan_rejected",
+      "expected_analysis_type": "time_trend",
+      "expected_metrics": [
+        "purchase_amount"
+      ],
+      "verifiable": false,
+      "checks": [
+        {
+          "kind": "error_code_in",
+          "values": [
+            "no_metric",
+            "unsupported_metric",
+            "plan_rejected"
+          ]
+        }
+      ],
+      "reason_contains": "销售额",
+      "expected_error_code": "unsupported_metric",
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "behavior"
+    },
+    "N02": {
+      "expected_behavior": "reject",
+      "expected_status": "plan_rejected",
+      "expected_analysis_type": "time_trend",
+      "expected_metrics": [
+        "purchase_amount"
+      ],
+      "verifiable": false,
+      "checks": [
+        {
+          "kind": "error_code_in",
+          "values": [
+            "no_metric",
+            "unsupported_metric",
+            "plan_rejected"
+          ]
+        }
+      ],
+      "reason_contains": "利润",
+      "expected_error_code": "unsupported_metric",
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "behavior"
+    },
+    "N03": {
+      "expected_behavior": "clarify",
+      "expected_status": "needs_clarification",
+      "expected_analysis_type": "time_trend",
+      "expected_metrics": [
+        "balance"
+      ],
+      "verifiable": false,
+      "checks": [
+        {
+          "kind": "error_code_in",
+          "values": [
+            "metric_not_enabled",
+            "unsupported_metric",
+            "no_metric",
+            "plan_rejected",
+            "invalid_plan",
+            "plan_parse_error",
+            "needs_clarification"
+          ]
+        }
+      ],
+      "reason_contains": "余额",
+      "expected_error_code": "unsupported_metric",
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "behavior"
+    },
+    "N04": {
+      "expected_behavior": "clarify",
+      "expected_status": "needs_clarification",
+      "expected_analysis_type": "time_trend",
+      "expected_metrics": [
+        "purchase_amount"
+      ],
+      "verifiable": false,
+      "checks": [
+        {
+          "kind": "clarification_present"
+        }
+      ],
+      "reason_contains": "时间",
+      "expected_error_code": "needs_clarification",
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "behavior"
+    },
+    "N05": {
+      "expected_behavior": "clarify",
+      "expected_status": "needs_clarification",
+      "expected_analysis_type": "time_trend",
+      "expected_metrics": [
+        "purchase_amount"
+      ],
+      "verifiable": false,
+      "checks": [
+        {
+          "kind": "clarification_present"
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "behavior"
+    },
+    "N06": {
+      "expected_behavior": "reject",
+      "expected_status": "insufficient_data",
+      "expected_analysis_type": "time_trend",
+      "expected_metrics": [
+        "purchase_amount"
+      ],
+      "verifiable": false,
+      "checks": [
+        {
+          "kind": "error_code_in",
+          "values": [
+            "insufficient_data",
+            "no_data",
+            "empty_result"
+          ]
+        }
+      ],
+      "reason_contains": "数据点",
+      "expected_error_code": "insufficient_data",
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "behavior"
+    },
+    "N07": {
+      "expected_behavior": "reject",
+      "expected_status": "insufficient_data",
+      "expected_analysis_type": "time_trend",
+      "expected_metrics": [
+        "daily_yield"
+      ],
+      "verifiable": false,
+      "checks": [
+        {
+          "kind": "error_code_in",
+          "values": [
+            "insufficient_data",
+            "no_data",
+            "empty_result"
+          ]
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": "insufficient_data",
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "behavior"
+    },
+    "N08": {
+      "expected_behavior": "reject",
+      "expected_status": "insufficient_data",
+      "expected_analysis_type": "time_trend",
+      "expected_metrics": [
+        "purchase_amount"
+      ],
+      "verifiable": false,
+      "checks": [
+        {
+          "kind": "error_code_in",
+          "values": [
+            "insufficient_data",
+            "no_data",
+            "date_out_of_range",
+            "empty_result",
+            "plan_rejected"
+          ]
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "behavior"
+    },
+    "N09": {
+      "expected_behavior": "reject",
+      "expected_status": "insufficient_data",
+      "expected_analysis_type": "time_trend",
+      "expected_metrics": [
+        "purchase_amount"
+      ],
+      "verifiable": false,
+      "checks": [
+        {
+          "kind": "error_code_in",
+          "values": [
+            "insufficient_data",
+            "no_data",
+            "date_out_of_range",
+            "empty_result",
+            "plan_rejected"
+          ]
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "behavior"
+    },
+    "N10": {
+      "expected_behavior": "clarify",
+      "expected_status": "needs_clarification",
+      "expected_analysis_type": "time_trend",
+      "expected_metrics": [
+        "user_count",
+        "purchase_amount"
+      ],
+      "verifiable": false,
+      "checks": [
+        {
+          "kind": "error_code_in",
+          "values": [
+            "metric_conflict",
+            "plan_rejected",
+            "ambiguous_user_count_semantics",
+            "needs_clarification"
+          ]
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": "metric_conflict",
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "behavior"
+    },
+    "N11": {
+      "expected_behavior": "clarify",
+      "expected_status": "needs_clarification",
+      "expected_analysis_type": "time_trend",
+      "expected_metrics": [
+        "user_count"
+      ],
+      "verifiable": false,
+      "checks": [
+        {
+          "kind": "error_code_in",
+          "values": [
+            "static_metric_time_series",
+            "metric_conflict",
+            "plan_rejected",
+            "ambiguous_user_count_semantics",
+            "needs_clarification"
+          ]
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "behavior"
+    },
+    "N12": {
+      "expected_behavior": "reject",
+      "expected_status": "plan_rejected",
+      "expected_analysis_type": "time_trend",
+      "expected_metrics": [
+        "purchase_amount"
+      ],
+      "verifiable": false,
+      "checks": [
+        {
+          "kind": "schema_rejected"
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "behavior"
+    },
+    "N13": {
+      "expected_behavior": "reject",
+      "expected_status": "plan_rejected",
+      "expected_analysis_type": "time_trend",
+      "expected_metrics": [
+        "shibor_rate:3Y"
+      ],
+      "verifiable": false,
+      "checks": [
+        {
+          "kind": "schema_rejected"
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "behavior"
+    },
+    "N14": {
+      "expected_behavior": "clarify",
+      "expected_status": "needs_clarification",
+      "expected_analysis_type": "time_trend",
+      "expected_metrics": [
+        "purchase_amount"
+      ],
+      "verifiable": false,
+      "checks": [
+        {
+          "kind": "error_code_in",
+          "values": [
+            "needs_clarification",
+            "plan_rejected",
+            "invalid_plan",
+            "plan_parse_error"
+          ]
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "behavior"
+    },
+    "N15": {
+      "expected_behavior": "reject",
+      "expected_status": "plan_rejected",
+      "expected_analysis_type": "time_trend",
+      "expected_metrics": [
+        "purchase_amount"
+      ],
+      "verifiable": false,
+      "checks": [
+        {
+          "kind": "schema_rejected"
+        }
+      ],
+      "reason_contains": null,
+      "expected_error_code": null,
+      "method": "DuckDB read_csv_auto 独立聚合 + Python 算术交叉复算",
+      "verification_kind": "behavior"
+    }
+  }
+}

@@ -1,0 +1,130 @@
+name: CI
+
+# 无真实 API Key、无原始数据也能完整运行：
+#   - 依赖安装 → 导入/入口检查
+#   → SHA-256 校验 + 离线构建演示库（失败即中断 CI）
+#   → 校验四表与日期覆盖
+#   → pytest（区分预期跳过 / 演示数据未加载的异常跳过）
+#   → 离线 Benchmark → Golden 独立核验 → 上传产物
+#
+# 注意：本仓库当前**尚未提交/推送**（由负责人决定），此工作流仅为就绪状态。
+
+on:
+  push:
+    branches: ["main", "master"]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: pytest + benchmark (offline)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.13"]
+
+    env:
+      # 显式确认：CI 不配置任何 API Key（离线评测不需要）
+      DATAAGENT_LLM_API_KEY: ""
+      MPLBACKEND: Agg
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 安装 Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: 安装依赖（含 web 与 dev）
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[dev,web]"
+
+      - name: 依赖完整性自检（防止中途中断导致包损坏）
+        run: |
+          python -c "import duckdb, sqlglot, pydantic, openai, matplotlib, pandas, streamlit; print('deps OK')"
+
+      - name: 构建演示数据库（SHA-256 校验 + 离线建库）
+        # 使用仓库自带 demo_data/*.parquet 离线构建；构建失败（数据缺失/校验不通过）直接中断 CI
+        run: python scripts/build_demo_db.py --verify --overwrite
+
+      - name: 校验四表与日期覆盖
+        # 构建产物必须包含四张业务表，且资金表覆盖 2013-07-01 ~ 2014-08-31
+        run: |
+          python - <<'PY'
+          import duckdb
+          from dataagent import config
+          con = duckdb.connect(str(config.DB_PATH), read_only=True)
+          exp = {"user_balance_table", "user_profile_table",
+                 "mfd_day_share_interest", "mfd_bank_shibor"}
+          got = {r[0] for r in con.execute("SHOW TABLES").fetchall()}
+          assert exp <= got, f"缺少表: {exp - got}"
+          lo, hi = con.execute(
+              "SELECT MIN(report_date), MAX(report_date) FROM user_balance_table"
+          ).fetchone()
+          assert str(lo) == "2013-07-01" and str(hi) == "2014-08-31", (lo, hi)
+          print("四表齐全，资金表日期覆盖", lo, "至", hi)
+          PY
+
+      - name: 基础导入与文档入口检查
+        run: |
+          python -c "import dataagent; print('dataagent', dataagent.__version__)"
+          python -c "import web.service as s; print('web service OK', s.package_version())"
+          python scripts/demo_agent.py --help > /dev/null
+          python scripts/evaluate_agent.py --help > /dev/null
+          python scripts/verify_golden.py --help > /dev/null
+          python -c "
+import tomllib, pathlib
+d = tomllib.loads(pathlib.Path('pyproject.toml').read_text())
+assert d['project']['version'] == __import__('dataagent').__version__
+print('version consistent:', d['project']['version'])
+"
+
+      - name: 单元与集成测试（无原始数据时自动跳过原始数据相关用例）
+        run: python -m pytest -q -rs
+
+      - name: 异常跳过检查（区分预期跳过 / 演示数据未加载）
+        # 演示数据库已在上方离线构建；若演示数据相关测试仍被跳过，属异常，应中断 CI。
+        # 仅"缺原始数据"的预期跳过允许存在。
+        run: |
+          python - <<'PY'
+          import sys, subprocess
+          from dataagent import config
+          assert config.demo_db_available(), "演示数据库未构建：build_demo_db.py 步骤应已生成"
+          r = subprocess.run(
+              [sys.executable, "-m", "pytest", "tests/test_demo_data_delivery.py",
+               "-q", "-rs"], capture_output=True, text=True)
+          txt = r.stdout + r.stderr
+          if "演示数据库尚未构建" in txt or "演示数据库尚未构建" in txt:
+              print("ABNORMAL SKIP: 演示数据库相关测试被跳过，但 CI 已构建——属异常跳过")
+              sys.exit(2)
+          sys.exit(r.returncode)
+          PY
+
+      - name: 离线 Benchmark（不调用真实模型）
+        run: python scripts/evaluate_agent.py
+
+      - name: Golden Answers 独立核验
+        run: python scripts/verify_golden.py --json artifacts/evaluation/latest/golden_verification.json
+
+      - name: 上传评测产物（供人工查看）
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-${{ matrix.python-version }}
+          path: |
+            artifacts/evaluation/latest/evaluation_results.json
+            artifacts/evaluation/latest/summary.md
+            artifacts/evaluation/latest/run_log.jsonl
+            artifacts/evaluation/latest/golden_verification.json
+          if-no-files-found: warn
+          retention-days: 7
