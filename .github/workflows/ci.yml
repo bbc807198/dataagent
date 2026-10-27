@@ -93,11 +93,6 @@ jobs:
           print("version consistent:", metadata["project"]["version"])
           PY
 
-import tomllib, pathlib
-d = tomllib.loads(pathlib.Path('pyproject.toml').read_text())
-assert d['project']['version'] == __import__('dataagent').__version__
-print('version consistent:', d['project']['version'])
-"
 
       - name: 单元与集成测试（无原始数据时自动跳过原始数据相关用例）
         run: python -m pytest -q -rs
