@@ -148,7 +148,7 @@ flowchart LR
 
 ```powershell
 # 1) 克隆
-git clone <your-repo-url> dataagent
+git clone https://github.com/bbc807198/dataagent.git
 cd dataagent
 
 # 2) 创建虚拟环境（Windows PowerShell）
