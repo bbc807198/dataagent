@@ -241,7 +241,7 @@ Mock 模式使用**事先准备好的分析计划**（不能自由理解任意�
 $secure = Read-Host -AsSecureString "请输入 API Key"
 $env:DATAAGENT_LLM_API_KEY = [System.Net.NetworkCredential]::new("", $secure).Password
 $env:DATAAGENT_LLM_BASE_URL = "https://api.deepseek.com"
-$env:DATAAGENT_LLM_MODEL = "<服务商文档中的模型名>"
+$env:DATAAGENT_LLM_MODEL = "deepseek-flash"
 
 # 自查（只显示是否已设置，不打印值）
 if ($env:DATAAGENT_LLM_API_KEY) { "KEY: 已设置" } else { "KEY: 未设置" }
